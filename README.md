@@ -32,14 +32,14 @@
 
 ## Введение
 
-Этот фреймворк был вдохновлён проектом **Unity Weld** ([ссылка на репозиторий](https://github.com/Real-Serious-Games/Unity-Weld)), но реализует привязки иначе — не через тяжёлую чистую рефлексию, а через генерацию runtime expressions, которые в рантайме конвертируются в делегаты с прямым вызовом методов. Это даёт заметное преимущество по производительности на сложных UI. Также реализована гибкая система Binder'ов и поддержка SubViewModel, а Editor часть сделана на UI Toolkit и максимально универсален.
+Этот фреймворк был вдохновлён проектом **Unity Weld** ([ссылка на репозиторий](https://github.com/Real-Serious-Games/Unity-Weld)), но реализует привязки иначе - не через тяжёлую чистую рефлексию, а через генерацию runtime expressions, которые в рантайме конвертируются в делегаты с прямым вызовом методов. Это даёт заметное преимущество по производительности на сложных UI. Также реализована гибкая система Binder'ов и поддержка SubViewModel, а Editor часть сделана на UI Toolkit и максимально универсальна настолько, насколько это возможно.
 
 ---
 
 ## Особенности
 
-* Реализация привязок через runtime expressions → делегаты.
-* Гибкая архитектура Binder'ов — легко расширяется под ваши нужды.
+* Реализация привязок через runtime-expressions → делегаты.
+* Гибкая архитектура Binder'ов - легко расширяется под ваши нужды.
 * Поддержка SubViewModel и коллекций ViewModel.
 * Editor-инструменты на UI Toolkit (расширяемые).
 * Работает на IL2CPP (при соблюдении некоторых требований) и на мобильных платформах.
@@ -48,12 +48,12 @@
 
 ## Базовые концепции
 
-* **Model** — бизнес-логика и данные (POCO, ECS-компоненты и т.п.).
-* **View** — UI-элементы (TextMeshPro, Image, Toggle, Slider и т.д.).
-* **ViewModel** — посредник между Model и View, содержит состояние, доступное для биндинга.
-* **Binders** — компоненты, связывающие ViewModel и View (OneWay, TwoWay, Command, Collection и т.д.).
-* **Converters** — преобразуют данные (например: формат валюты, DateTime и т.д.).
-* **ViewModelTemplates** — провайдеры ViewModel'ей для коллекций и SubViewModel.
+* **Model** - бизнес-логика и данные (POCO, ECS-компоненты и т.п.).
+* **View** - UI-элементы (TextMeshPro, Image, Toggle, Slider и т.д.).
+* **ViewModel** - посредник между Model и View, содержит состояние, доступное для биндинга.
+* **Binders** - компоненты, связывающие ViewModel и View (OneWay, TwoWay, Command, Collection и т.д.).
+* **Converters** - преобразуют данные (например: формат валюты, DateTime и т.д.).
+* **ViewModelTemplates** - провайдеры ViewModel'ей для коллекций и SubViewModel.
 
 ---
 
@@ -69,8 +69,8 @@
 
 Есть два основных варианта:
 
-* `ViewModelMonoBehaviour` — база для ViewModel, которые живут на GameObject (удобно для быстрого прототипирования и сцен).
-* `ViewModel` — чистые классы (POCO), используются как SubViewModel или элементы коллекций.
+* `ViewModelMonoBehaviour` - база для ViewModel, которые живут на GameObject (удобно для быстрого прототипирования и сцен).
+* `ViewModel` - чистые классы (POCO), используются как SubViewModel или элементы коллекций.
 
 ### ViewModelMonoBehaviour (пример)
 
@@ -275,7 +275,7 @@ public sealed class SliderBinder : TwoWayBinder<float, float>
 
 ## Коллекции
 
-Для коллекций используется `ObservableDataList<T>` — поведение похоже на обычный `List<T>`, но с уведомлениями об изменениях.
+Для коллекций используется `ObservableDataList<T>` - поведение похоже на обычный `List<T>`, но с уведомлениями об изменениях.
 
 ```csharp
 [Bindable]
@@ -303,7 +303,7 @@ public class InventoryViewModel : ViewModel
 
 ## Конвертеры (Converters)
 
-Создание конвертера — наследуйте от `ValueConverterT<TSource, TTarget>` и реализуйте `Convert`/`ConvertBack`.
+Создание конвертера - наследуйте от `ValueConverterT<TSource, TTarget>` и реализуйте `Convert`/`ConvertBack`.
 
 ```csharp
 [CreateAssetMenu(menuName = "MVVM/Converters/Enum To String")]
@@ -314,25 +314,22 @@ public sealed class EnumToStringConverterT<TEnum> : ValueConverterT<TEnum, strin
 }
 ```
 
-Чтобы использовать конвертер — добавьте созданный `ScriptableObject` конвертер в список конвертеров PropertyBinder'а в инспекторе.
+Чтобы использовать конвертер - добавьте созданный `ScriptableObject` конвертер в список конвертеров PropertyBinder'а в инспекторе.
 
 ---
 
 ## Чаво (FAQ)
 
-* **Могу ли я писать свою сложную логику Binder'ов?** — Да, унаследуйтесь от `BinderBase` или нужного базового класса и реализуйте логику.
-* **Работает ли с IL2CPP и aggressive stripping?** — Да, но пометьте классы и члены атрибутом `[UnityEngine.Scripting.Preserve]`.
-* **Работает ли на WebGL / Android / iOS?** — Гарантированно работает на Android, PC, iOS. WebGL не тестировался полноценно — используйте с осторожностью.
-* **Могу ли я используя данный MVVM фреймворк делать сложные анимации?** — В теории - да, если вы сделаете свою обертку над [Stateful UI](https://github.com/dmitry-ivashenko/StatefulUI) который может через StateRole воспроизводить анимации
+* **Могу ли я писать свою сложную логику Binder'ов?** - Да, унаследуйтесь от `BinderBase` или нужного базового класса и реализуйте логику.
+* **Работает ли с IL2CPP и aggressive stripping?** - Да, но пометьте классы и члены атрибутом `[UnityEngine.Scripting.Preserve]`.
+* **Работает ли на WebGL / Android / iOS?** - Гарантированно работает на Android, PC, iOS. WebGL не тестировался полноценно — используйте с осторожностью.
+* **Могу ли я используя данный MVVM фреймворк делать сложные анимации?** - В теории - да, если вы сделаете свою обертку над [Stateful UI](https://github.com/dmitry-ivashenko/StatefulUI) который может через StateRole воспроизводить анимации
 
 ---
 
 ## Контакты и вклад
 
 Если хотите внести улучшения или нашли баг — присылайте PR/Issue в репозиторий (или напишите мне [в телеграм](https://t.me/kiizbuy)).
-
----
-
 
 ---
 
